@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Assignment</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      margin: 10px 0;
+    }
+    input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      border: 1px solid #ccc;
+      width: 300px;
+	  border-radius: 5px;
+    }
+    button {
+  background: linear-gradient(to bottom right, #FF4E50, #F9D423);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+    }
+    button:hover {
+       opacity: 0.8;
+    }
+	
+	#contentlist{}
+	
+	.wrapper{ background: #f2f2f2; padding: 10px;     width: fit-content; border: 1px solid grey;}
+  </style>
+</head>
+<body>
+
+<div class="wrapper">
+<label for="todoInput">Add new item:</label>
+<input type="text" id="todoInput" placeholder="Please Add a new item" />
+
+<button id="addBtn" aria-label="Add new item">Add</button>
+
+  <ul id="contentlist" aria-live="polite" aria-atomic="true"></ul>
+  </div>
+
+
+<script>
+    class ContentList {
+  constructor() {
+    this.list = [];
+  }
+
+  add(item) {
+    this.list.push(item);
+  }
+
+  remove(item) {
+    const index = this.list.indexOf(item);
+    if (index > -1) {
+      this.list.splice(index, 1);
+    }
+  }
+
+  listAll() {
+    const listEl = document.getElementById('contentlist');
+    listEl.innerHTML = '';
+
+    this.list.forEach(item => {
+      const li = document.createElement('li');
+      li.innerHTML = `<span>${item}</span> <button class="removeBtn">Delete</button>`;
+      listEl.appendChild(li);
+    });
+
+    listEl.addEventListener('click', event => {
+      if (event.target.classList.contains('removeBtn')) {
+        const item = event.target.previousElementSibling.textContent;
+        this.remove(item);
+        this.listAll();
+      }
+    });
+  }
+}
+
+const myList = new ContentList();
+const todoInput = document.getElementById('todoInput');
+const addBtn = document.getElementById('addBtn');
+
+addBtn.addEventListener('click', () => {
+  const item = todoInput.value.trim();
+  if (item) {
+    myList.add(item);
+    myList.listAll();
+    todoInput.value = '';
+  }
+});
+
+</script>
+</body>
+</html>

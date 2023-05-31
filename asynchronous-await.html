@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Product Details</title>
+  <style>
+    /* CSS styles for product details */
+    .product {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      margin-top: 20px;
+      font-family: Arial, sans-serif;
+    }
+    .thumbnail {
+      width: 200px;
+    }
+    .images {
+      display: flex;
+      margin-top: 10px;
+    }
+    .images img {
+      width: 100px;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="product">
+    <h2>Product Details</h2>
+    <div id="product-details"></div>
+  </div>
+
+  <script>
+
+    function fetchProductDetails() {
+      return new Promise((resolve, reject) => {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'https://dummyjson.com/products/1', true);
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+              var product = JSON.parse(xhr.responseText);
+              resolve(product);
+            } else {
+              reject(new Error('Failed to fetch product details'));
+            }
+          }
+        };
+        xhr.send();
+      });
+    }
+
+  
+    function displayProductDetails(product) {
+      var productDetails = document.getElementById('product-details');
+
+     
+      var title = document.createElement('h3');
+      title.textContent = product.title;
+      productDetails.appendChild(title);
+
+      var description = document.createElement('p');
+      description.textContent = product.description;
+      productDetails.appendChild(description);
+
+      var price = document.createElement('p');
+      price.textContent = 'Price: $' + product.price.toFixed(2);
+      productDetails.appendChild(price);
+
+      var discount = document.createElement('p');
+      discount.textContent = 'Discount: ' + product.discountPercentage.toFixed(2) + '%';
+      productDetails.appendChild(discount);
+
+      var rating = document.createElement('p');
+      rating.textContent = 'Rating: ' + product.rating.toFixed(2);
+      productDetails.appendChild(rating);
+
+      var stock = document.createElement('p');
+      stock.textContent = 'Stock: ' + product.stock;
+      productDetails.appendChild(stock);
+
+      var brand = document.createElement('p');
+      brand.textContent = 'Brand: ' + product.brand;
+      productDetails.appendChild(brand);
+
+      var category = document.createElement('p');
+      category.textContent = 'Category: ' + product.category;
+      productDetails.appendChild(category);
+
+      var thumbnail = document.createElement('img');
+      thumbnail.src = product.thumbnail;
+      thumbnail.alt = 'Product Thumbnail';
+      thumbnail.classList.add('thumbnail');
+      productDetails.appendChild(thumbnail);
+
+      var imagesContainer = document.createElement('div');
+      imagesContainer.classList.add('images');
+      product.images.forEach(function (image) {
+        var img = document.createElement('img');
+        img.src = image;
+        img.alt = 'Product Image';
+        imagesContainer.appendChild(img);
+      });
+      productDetails.appendChild(imagesContainer);
+    }
+
+    
+    (async function () {
+      try {
+        const product = await fetchProductDetails();
+        displayProductDetails(product);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    })();
+  </script>
+</body>
+</html>

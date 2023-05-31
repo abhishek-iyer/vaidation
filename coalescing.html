@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>index</title>
+  <style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+#person-details {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+p {
+  margin: 0;
+  padding: 5px 0;
+}
+
+.person-name {
+  font-weight: bold;
+}
+
+.person-details {
+  margin-top: 10px;
+}
+
+
+  </style>
+</head>
+<body>
+  <div id="person-details"></div>
+
+  <script>
+    const person = {
+      name: 'Abhishek',
+      address: {
+        city: 'Bangalore',
+        street: 'HSR Layout'
+      }
+    };
+
+	//Optional chaining
+    const city = person.address?.city;
+    const street = person.address?.street;
+
+	//Null coalescing
+    const name = person.name ?? 'Abhishek';
+    const zipcode = person.address?.zipcode ?? '560016';
+
+
+    const personDetails = document.getElementById('person-details');
+	
+	//template literals
+    personDetails.innerHTML = `
+      <h1>Personal Details</h1>
+      <p>Name: ${name}</p>
+      <p>City: ${city}</p>
+      <p>Street: ${street}</p>
+      <p>Zipcode: ${zipcode}</p>
+    `;
+  </script>
+</body>
+</html>

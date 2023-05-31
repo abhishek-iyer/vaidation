@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cryptocurrency Prices</title>
+  <style>
+    .crypto-name {
+      font-weight: bold;
+	  
+    }
+    .crypto-price {
+      color: green;
+	 
+    }
+	li{ padding: 10px; border-bottom: 1px solid grey;}
+	   li:nth-child(even) {
+      background-color: lightgrey;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    const products = [
+   { name: 'shiba INU', price: 4.80 },
+{ name: 'Babydoge', price: 8.00 },
+{ name: 'Ocean', price: 35.67 },
+{ name: 'BONK', price: 0.00005 },
+{ name: 'CHR', price: 14.75},
+{ name: 'FET', price: 25.72 },
+{ name: 'Wild', price: 2589.15 },
+{ name: 'GRT', price: 12.97 },
+{ name: 'CORE', price: 12.30 },
+{ name: 'QNT', price: 84.46 }
+    ];
+
+    const productListHTML = `
+      <ul>
+        ${products.map(product => `
+          <li>
+            <span class="crypto-name">${product.name}</span>
+            <span class="crypto-price">$${product.price.toFixed(2)}</span>
+          </li>
+        `).join('')}
+      </ul>
+    `;
+
+    document.body.innerHTML = productListHTML;
+  </script>
+</body>
+</html>

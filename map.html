@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>index</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <h1>Employee Working Hours</h1>
+  <canvas id="chart"></canvas>
+
+  <script>
+    const employees = [
+      { name: 'abhishek', hours: 8 },
+      { name: 'deepak', hours: 7 },
+      { name: 'pradeep', hours: 9 },
+      { name: 'sekar', hours: 6 },
+      { name: 'vinod', hours: 8 },
+      { name: 'rajasekar', hours: 7 },
+      { name: 'srini', hours: 9 },
+      { name: 'kiran', hours: 6 },
+      { name: 'akash', hours: 8 },
+      { name: 'puneeth', hours: 7 }
+    ];
+
+
+    const { workingHours, colors } = employees.reduce((accumulator, employee, index) => {
+      accumulator.workingHours.push(employee.hours);
+      accumulator.colors.push(getColor(index));
+      return accumulator;
+    }, { workingHours: [], colors: [] });
+
+ 
+    function getColor(index) {
+      const colorPalette = ['steelblue', 'lightcoral', 'green', 'orange', 'purple', 'teal', 'blue', 'red', 'yellow', 'pink'];
+      return colorPalette[index % colorPalette.length];
+    }
+
+  
+    const chartCanvas = document.getElementById('chart');
+    new Chart(chartCanvas, {
+      type: 'bar',
+      data: {
+        labels: employees.map(employee => employee.name),
+        datasets: [{
+          label: 'Working Hours',
+          data: workingHours,
+          backgroundColor: colors
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: Math.max(...workingHours) + 2
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
